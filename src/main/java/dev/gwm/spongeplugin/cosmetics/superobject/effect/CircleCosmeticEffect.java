@@ -102,8 +102,8 @@ public class CircleCosmeticEffect extends AbstractCosmeticEffect {
                 }
                 final double x = getPosition().getX();
                 final double z = getPosition().getZ();
-                double xOffset = x + radius * Math.cos(i * d);
-                double zOffset = z + radius * Math.sin(i * d);
+                double xOffset = radius * Math.cos(i * d);
+                double zOffset = radius * Math.sin(i * d);
                 getViewer().spawnParticles(effect, getPosition().add(new Vector3d(xOffset, 0, zOffset)));
                 i++;
             }
