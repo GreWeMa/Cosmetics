@@ -20,9 +20,6 @@ public abstract class AbstractCosmeticEffect extends AbstractSuperObject impleme
     public AbstractCosmeticEffect(ConfigurationNode node) {
         super(node);
         try {
-            if (!id().isPresent()) {
-                throw new RuntimeException("The Cosmetic Particle Effect does not have an ID!");
-            }
             ConfigurationNode delayNode = node.getNode("DELAY");
             ConfigurationNode offsetNode = node.getNode("OFFSET");
             if (delayNode.isVirtual()) {
@@ -43,12 +40,9 @@ public abstract class AbstractCosmeticEffect extends AbstractSuperObject impleme
         }
     }
 
-    public AbstractCosmeticEffect(Optional<String> id,
+    public AbstractCosmeticEffect(String id,
                                   Optional<Long> delay, Optional<Vector3d> offset) {
         super(id);
-        if (!id().isPresent()) {
-            throw new RuntimeException("The Cosmetic Particle Effect does not have an ID!");
-        }
         if (delay.isPresent() && delay.get() <= 0) {
             throw new IllegalArgumentException("Delay is equal to or less than 0!");
         }

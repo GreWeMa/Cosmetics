@@ -57,10 +57,6 @@ public interface CosmeticEffect extends SuperObject {
 
     Runnable createTask(Viewer viewer, Locatable locatable, Vector3d offset);
 
-    default String getId() {
-        return id().get();
-    }
-
     default long getDelay() {
         return defaultDelay();
     }
