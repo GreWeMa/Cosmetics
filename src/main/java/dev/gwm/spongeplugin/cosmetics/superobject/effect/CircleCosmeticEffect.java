@@ -1,16 +1,14 @@
 package dev.gwm.spongeplugin.cosmetics.superobject.effect;
 
 import com.flowpowered.math.vector.Vector3d;
-import com.google.common.reflect.TypeToken;
 import dev.gwm.spongeplugin.cosmetics.superobject.effect.base.AbstractCosmeticEffect;
 import dev.gwm.spongeplugin.cosmetics.utils.CosmeticsUtils;
 import dev.gwm.spongeplugin.library.exception.SuperObjectConstructionException;
+import dev.gwm.spongeplugin.library.utils.GWMLibraryUtils;
 import ninja.leaping.configurate.ConfigurationNode;
 import org.spongepowered.api.effect.Viewer;
 import org.spongepowered.api.effect.particle.ParticleEffect;
 import org.spongepowered.api.effect.particle.ParticleOptions;
-import org.spongepowered.api.effect.particle.ParticleTypes;
-import org.spongepowered.api.util.Color;
 import org.spongepowered.api.world.Locatable;
 
 import java.util.Optional;
@@ -19,25 +17,28 @@ public class CircleCosmeticEffect extends AbstractCosmeticEffect {
 
     public static final String TYPE = "CIRCLE";
 
-    private final Optional<Color> color;
+    private final ParticleEffect particleEffect;
+    private final boolean perAnimationColor;
     private final boolean perParticleColor;
     private final double radius;
     private final double step;
-    private final int stepsPerAnimation;
+    private final int particlesPerAnimation;
 
     public CircleCosmeticEffect(ConfigurationNode node) {
         super(node);
         try {
-            ConfigurationNode colorNode = node.getNode("COLOR");
+            ConfigurationNode particleEffectNode = node.getNode("PARTICLE_EFFECT");
+            ConfigurationNode perAnimationColorNode = node.getNode("PER_ANIMATION_COLOR");
             ConfigurationNode perParticleColorNode = node.getNode("PER_PARTICLE_COLOR");
             ConfigurationNode radiusNode = node.getNode("RADIUS");
             ConfigurationNode stepNode = node.getNode("STEP");
-            ConfigurationNode stepsPerAnimationNode = node.getNode("STEPS_PER_ANIMATION");
-            if (colorNode.isVirtual()) {
-                color = Optional.empty();
+            ConfigurationNode particlesPerAnimationNode = node.getNode("PARTICLES_PER_ANIMATION");
+            if (!particleEffectNode.isVirtual()) {
+                particleEffect = GWMLibraryUtils.parseParticleEffect(particleEffectNode);
             } else {
-                color = Optional.of(colorNode.getValue(TypeToken.of(Color.class)));
+                particleEffect = CosmeticsUtils.DEFAULT_PARTICLE_EFFECT;
             }
+            perAnimationColor = perAnimationColorNode.getBoolean(false);
             perParticleColor = perParticleColorNode.getBoolean(false);
             if (!radiusNode.isVirtual()) {
                 radius = radiusNode.getDouble();
@@ -55,12 +56,12 @@ public class CircleCosmeticEffect extends AbstractCosmeticEffect {
             if (step <= 0) {
                 throw new IllegalArgumentException("Step is equal to or less than 0!");
             }
-            if (!stepsPerAnimationNode.isVirtual()) {
-                stepsPerAnimation = stepsPerAnimationNode.getInt();
+            if (!particlesPerAnimationNode.isVirtual()) {
+                particlesPerAnimation = particlesPerAnimationNode.getInt();
             } else {
-                stepsPerAnimation = 1;
+                particlesPerAnimation = 1;
             }
-            if (stepsPerAnimation <= 0) {
+            if (particlesPerAnimation <= 0) {
                 throw new IllegalArgumentException("Steps Per Animation is equal to or less than 0!");
             }
         } catch (Exception e) {
@@ -70,10 +71,11 @@ public class CircleCosmeticEffect extends AbstractCosmeticEffect {
 
     public CircleCosmeticEffect(String id,
                                 Optional<Long> delay, Optional<Vector3d> defaultOffset,
-                                Optional<Color> color, boolean perParticleColor,
-                                double radius, double step, int stepsPerAnimation) {
+                                ParticleEffect particleEffect, boolean perAnimationColor, boolean perParticleColor,
+                                double radius, double step, int particlesPerAnimation) {
         super(id, delay, defaultOffset);
-        this.color = color;
+        this.particleEffect = particleEffect;
+        this.perAnimationColor = perAnimationColor;
         this.perParticleColor = perParticleColor;
         if (radius <= 0) {
             throw new IllegalArgumentException("Radius is equal to or less than 0!");
@@ -83,10 +85,10 @@ public class CircleCosmeticEffect extends AbstractCosmeticEffect {
             throw new IllegalArgumentException("Step is equal to or less than 0!");
         }
         this.step = step;
-        if (stepsPerAnimation <= 0) {
+        if (particlesPerAnimation <= 0) {
             throw new IllegalArgumentException("Steps Per Animation is equal to or less than 0!");
         }
-        this.stepsPerAnimation = stepsPerAnimation;
+        this.particlesPerAnimation = particlesPerAnimation;
     }
 
     @Override
@@ -99,8 +101,12 @@ public class CircleCosmeticEffect extends AbstractCosmeticEffect {
         return new EffectRunnable(viewer, locatable, offset);
     }
 
-    public Optional<Color> getColor() {
-        return color;
+    public ParticleEffect getParticleEffect() {
+        return particleEffect;
+    }
+
+    public boolean isPerAnimationColor() {
+        return perAnimationColor;
     }
 
     public boolean isPerParticleColor() {
@@ -115,8 +121,8 @@ public class CircleCosmeticEffect extends AbstractCosmeticEffect {
         return step;
     }
 
-    public int getStepsPerAnimation() {
-        return stepsPerAnimation;
+    public int getParticlesPerAnimation() {
+        return particlesPerAnimation;
     }
 
     private final class EffectRunnable extends AbstractEffectRunnable {
@@ -132,10 +138,18 @@ public class CircleCosmeticEffect extends AbstractCosmeticEffect {
         @Override
         public void run() {
             Vector3d position = getPosition();
-            Color particleColor = color.orElse(CosmeticsUtils.getRandomColor());
-            for (int j = 0; j < stepsPerAnimation; j++) {
+            ParticleEffect effect = perAnimationColor ?
+                    ParticleEffect.builder().
+                            from(particleEffect).
+                            option(ParticleOptions.COLOR, CosmeticsUtils.getRandomColor()).
+                            build() :
+                    particleEffect;
+            for (int j = 0; j < particlesPerAnimation; j++) {
                 if (perParticleColor) {
-                    particleColor = CosmeticsUtils.getRandomColor();
+                    effect = ParticleEffect.builder().
+                            from(particleEffect).
+                            option(ParticleOptions.COLOR, CosmeticsUtils.getRandomColor()).
+                            build();
                 }
                 if (i > l) {
                     i = 0;
@@ -144,11 +158,7 @@ public class CircleCosmeticEffect extends AbstractCosmeticEffect {
                 final double z = position.getZ();
                 double xOffset = radius * Math.cos(i * d);
                 double zOffset = radius * Math.sin(i * d);
-                getViewer().spawnParticles(
-                        ParticleEffect.builder().type(ParticleTypes.REDSTONE_DUST).
-                                option(ParticleOptions.COLOR, particleColor).
-                                build(),
-                        position.add(new Vector3d(xOffset, 0, zOffset)));
+                getViewer().spawnParticles(effect, position.add(new Vector3d(xOffset, 0, zOffset)));
                 i++;
             }
         }

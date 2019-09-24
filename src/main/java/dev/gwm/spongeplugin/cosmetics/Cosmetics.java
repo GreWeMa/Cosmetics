@@ -35,7 +35,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Plugin(id = "cosmetics",
 		name = "Cosmetics",
-		version = "1.1",
+		version = "1.2",
 		description = "Fancy cosmetic effects",
 		authors = {"GWM"/* My contacts:
 		                 * E-Mail(nazark@tutanota.com),
@@ -46,7 +46,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 		})
 public class Cosmetics extends SpongePlugin {
 
-	public static final Version VERSION = new Version(null, 1, 1);
+	public static final Version VERSION = new Version(null, 1, 2);
 
 	private static Cosmetics instance = null;
 

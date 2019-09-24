@@ -6,6 +6,8 @@ import dev.gwm.spongeplugin.library.utils.Config;
 import dev.gwm.spongeplugin.library.utils.SuperObjectsService;
 import ninja.leaping.configurate.ConfigurationNode;
 import org.spongepowered.api.Sponge;
+import org.spongepowered.api.effect.particle.ParticleEffect;
+import org.spongepowered.api.effect.particle.ParticleTypes;
 import org.spongepowered.api.util.Color;
 
 import java.io.File;
@@ -13,6 +15,10 @@ import java.nio.file.Path;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class CosmeticsUtils {
+
+    public static final ParticleEffect DEFAULT_PARTICLE_EFFECT = ParticleEffect.builder().
+            type(ParticleTypes.REDSTONE_DUST).
+            build();
 
     public static boolean loadCosmeticEffect(File file, boolean force) {
         try {
