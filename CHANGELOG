@@ -1,14 +1,20 @@
+VERSION 1.3
+* Update to GWMLibrary 2.4
+* Add 'FIGLET' Cosmetic Effect
+* Add 'WALL' Cosmetic Effect
+* Change formatting in previous change logs
+
 VERSION 1.2
-1. Update to GWMLibrary 2.3
-2. Remove 'COLOR' parameter from HELIX', 'GLOBE', 'CIRCLE' and 'BLOCK-HIGHLIGHT' Cosmetic Effects
-3. Add 'PARTICLE_EFFECT' parameter to HELIX', 'GLOBE', 'CIRCLE' and 'BLOCK-HIGHLIGHT' Cosmetic Effects
-4. Add 'PER_ANIMATION_COLOR' parameter to HELIX', 'GLOBE', 'CIRCLE' and 'BLOCK-HIGHLIGHT'
-5. Rename 'STEPS_PER_ANIMATION' parameter in 'CIRCLE' Cosmetic Effect to 'PARTICLES_PER_ANIMATION'
+* Update to GWMLibrary 2.3
+* Remove 'COLOR' parameter from HELIX', 'GLOBE', 'CIRCLE' and 'BLOCK-HIGHLIGHT' Cosmetic Effects
+* Add 'PARTICLE_EFFECT' parameter to HELIX', 'GLOBE', 'CIRCLE' and 'BLOCK-HIGHLIGHT' Cosmetic Effects
+* Add 'PER_ANIMATION_COLOR' parameter to HELIX', 'GLOBE', 'CIRCLE' and 'BLOCK-HIGHLIGHT'
+* Rename 'STEPS_PER_ANIMATION' parameter in 'CIRCLE' Cosmetic Effect to 'PARTICLES_PER_ANIMATION'
 
 VERSION 1.1
-1. Update to GWMLibrary 2.2
-2. Add 'PER_PARTICLE_COLOR' parameter to 'HELIX', 'GLOBE', 'CIRCLE' and 'BLOCK-HIGHLIGHT' Cosmetic Effects
-3. Add 'COLOR' parameter to 'GLOBE', 'CIRCLE' and 'BLOCK-HIGHLIGHT' Cosmetic Effects
+* Update to GWMLibrary 2.2
+* Add 'PER_PARTICLE_COLOR' parameter to 'HELIX', 'GLOBE', 'CIRCLE' and 'BLOCK-HIGHLIGHT' Cosmetic Effects
+* Add 'COLOR' parameter to 'GLOBE', 'CIRCLE' and 'BLOCK-HIGHLIGHT' Cosmetic Effects
 
 VERSION 1.0.1
 * Fix 'CIRCLE' Cosmetic Effect

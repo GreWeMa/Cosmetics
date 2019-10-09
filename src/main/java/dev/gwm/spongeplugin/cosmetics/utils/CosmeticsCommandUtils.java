@@ -40,5 +40,4 @@ public final class CosmeticsCommandUtils {
         Sponge.getCommandManager().register(Cosmetics.getInstance(), spec,
                 "cosmetics", "cosmetic");
     }
-
 }

@@ -1,10 +1,7 @@
 package dev.gwm.spongeplugin.cosmetics;
 
 import com.google.inject.Inject;
-import dev.gwm.spongeplugin.cosmetics.superobject.effect.BlockHighlightCosmeticEffect;
-import dev.gwm.spongeplugin.cosmetics.superobject.effect.CircleCosmeticEffect;
-import dev.gwm.spongeplugin.cosmetics.superobject.effect.GlobeCosmeticEffect;
-import dev.gwm.spongeplugin.cosmetics.superobject.effect.HelixCosmeticEffect;
+import dev.gwm.spongeplugin.cosmetics.superobject.effect.*;
 import dev.gwm.spongeplugin.cosmetics.superobject.effect.base.CosmeticEffect;
 import dev.gwm.spongeplugin.cosmetics.utils.CosmeticsCommandUtils;
 import dev.gwm.spongeplugin.cosmetics.utils.CosmeticsSuperObjectCategories;
@@ -35,7 +32,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Plugin(id = "cosmetics",
 		name = "Cosmetics",
-		version = "1.2",
+		version = "1.3",
 		description = "Fancy cosmetic effects",
 		authors = {"GWM"/* My contacts:
 		                 * E-Mail(nazark@tutanota.com),
@@ -46,7 +43,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 		})
 public class Cosmetics extends SpongePlugin {
 
-	public static final Version VERSION = new Version(null, 1, 2);
+	public static final Version VERSION = new Version(null, 1, 3);
 
 	private static Cosmetics instance = null;
 
@@ -75,7 +72,6 @@ public class Cosmetics extends SpongePlugin {
 
 	private Language language;
 
-	private boolean checkUpdates = true;
 	private boolean logLoadedEffects = true;
 
 	@Listener
@@ -112,9 +108,6 @@ public class Cosmetics extends SpongePlugin {
 				getDefaultTranslation(assetManager), true, false);
 		loadConfigValues();
 		language = new Language(this);
-		if (checkUpdates) {
-		    checkUpdates();
-        }
 		CosmeticsCommandUtils.registerCommands(this);
 		logger.info("PreInitialization completed!");
 	}
@@ -134,6 +127,10 @@ public class Cosmetics extends SpongePlugin {
 				HelixCosmeticEffect.class);
 		event.register(new SuperObjectIdentifier<>(CosmeticsSuperObjectCategories.COSMETIC_EFFECT, CircleCosmeticEffect.TYPE),
 				CircleCosmeticEffect.class);
+        event.register(new SuperObjectIdentifier<>(CosmeticsSuperObjectCategories.COSMETIC_EFFECT, WallCosmeticEffects.TYPE),
+                WallCosmeticEffects.class);
+        event.register(new SuperObjectIdentifier<>(CosmeticsSuperObjectCategories.COSMETIC_EFFECT, FigletCosmeticEffect.TYPE),
+                FigletCosmeticEffect.class);
 	}
 
 	@Listener
@@ -159,9 +156,6 @@ public class Cosmetics extends SpongePlugin {
         languageConfig.reload();
         loadConfigValues();
         language = new Language(this);
-        if (checkUpdates) {
-            checkUpdates();
-        }
         unloadCpes();
 		loadCpes();
         logger.info("Plugin has been reloaded.");
@@ -169,9 +163,7 @@ public class Cosmetics extends SpongePlugin {
 
     private void loadConfigValues() {
 		try {
-			ConfigurationNode checkUpdatesNode = config.getNode("CHECK_UPDATES");
 			ConfigurationNode logLoadedEffectsNode = config.getNode("LOG_LOADED_EFFECTS");
-			checkUpdates = checkUpdatesNode.getBoolean(true);
 			logLoadedEffects = logLoadedEffectsNode.getBoolean(true);
 		} catch (Exception e) {
 			logger.error("Failed to load config values!", e);
@@ -256,10 +248,6 @@ public class Cosmetics extends SpongePlugin {
     @Override
 	public Language getLanguage() {
 		return language;
-	}
-
-	public boolean isCheckUpdates() {
-		return checkUpdates;
 	}
 
 	public boolean isLogLoadedEffects() {
