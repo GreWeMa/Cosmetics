@@ -156,7 +156,7 @@ public class Cosmetics extends SpongePlugin {
         languageConfig.reload();
         loadConfigValues();
         language = new Language(this);
-        unloadCpes();
+        unloadCosmeticEffects();
 		loadCpes();
         logger.info("Plugin has been reloaded.");
     }
@@ -204,7 +204,7 @@ public class Cosmetics extends SpongePlugin {
 		}
 	}
 
-	private void unloadCpes() {
+	private void unloadCosmeticEffects() {
 		Sponge.getServiceManager().provide(SuperObjectsService.class).get().
 				shutdownCreatedSuperObjects(superObject -> superObject instanceof CosmeticEffect);
 	}
