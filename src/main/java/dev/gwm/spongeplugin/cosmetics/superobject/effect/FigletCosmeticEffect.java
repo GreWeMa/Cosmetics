@@ -9,8 +9,12 @@ import io.leego.banana.BananaUtils;
 import ninja.leaping.configurate.ConfigurationNode;
 import org.spongepowered.api.effect.particle.ParticleEffect;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class FigletCosmeticEffect extends Abstract2dCosmeticEffect {
 
@@ -32,13 +36,22 @@ public class FigletCosmeticEffect extends Abstract2dCosmeticEffect {
         super(node);
         try {
             ConfigurationNode textNode = node.getNode("TEXT");
+            ConfigurationNode textFileNode = node.getNode("TEXT_FILE");
             ConfigurationNode fontNode = node.getNode("FONT");
             ConfigurationNode horizontalParticleDistanceNode = node.getNode("HORIZONTAL_PARTICLE_DISTANCE");
             ConfigurationNode verticalParticleDistanceNode = node.getNode("VERTICAL_PARTICLE_DISTANCE");
             ConfigurationNode xAngleNode = node.getNode("X_ROTATION");
             ConfigurationNode yAngleNode = node.getNode("Y_ROTATION");
             ConfigurationNode zAngleNode = node.getNode("Z_ROTATION");
-            text = textNode.getList(TypeToken.of(String.class));
+            if (!textNode.isVirtual()) {
+                text = textNode.getList(TypeToken.of(String.class));
+            } else if (!textFileNode.isVirtual()) {
+                text = new BufferedReader(new FileReader(new File(textFileNode.getString()))).
+                        lines().
+                        collect(Collectors.toList());
+            } else {
+                throw new IllegalArgumentException("Both TEXT and TEXT_FILE node do not exist!");
+            }
             font = fontNode.getString("Banner");
             dots = convert(text, font);
             horizontalParticleDistance = horizontalParticleDistanceNode.getDouble(0.2);

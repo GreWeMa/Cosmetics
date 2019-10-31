@@ -7,8 +7,12 @@ import dev.gwm.spongeplugin.library.exception.SuperObjectConstructionException;
 import ninja.leaping.configurate.ConfigurationNode;
 import org.spongepowered.api.effect.particle.ParticleEffect;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class WallCosmeticEffects extends Abstract2dCosmeticEffect {
 
@@ -28,12 +32,22 @@ public class WallCosmeticEffects extends Abstract2dCosmeticEffect {
         super(node);
         try {
             ConfigurationNode dotsNode = node.getNode("DOTS");
+            ConfigurationNode dotsFileNode = node.getNode("DOTS_FILE");
             ConfigurationNode horizontalParticleDistanceNode = node.getNode("HORIZONTAL_PARTICLE_DISTANCE");
             ConfigurationNode verticalParticleDistanceNode = node.getNode("VERTICAL_PARTICLE_DISTANCE");
             ConfigurationNode xAngleNode = node.getNode("X_ROTATION");
             ConfigurationNode yAngleNode = node.getNode("Y_ROTATION");
             ConfigurationNode zAngleNode = node.getNode("Z_ROTATION");
-            List<String> dotsLines = dotsNode.getList(TypeToken.of(String.class));
+            List<String> dotsLines;
+            if (!dotsNode.isVirtual()) {
+                dotsLines = dotsNode.getList(TypeToken.of(String.class));
+            } else if (!dotsFileNode.isVirtual()) {
+                dotsLines = new BufferedReader(new FileReader(new File(dotsFileNode.getString()))).
+                        lines().
+                        collect(Collectors.toList());
+            } else {
+                throw new IllegalArgumentException("Both DOTS and DOTS_FILES node do not exist!");
+            }
             dots = new boolean[dotsLines.size()][];
             for (int i = dotsLines.size() - 1; i >= 0; i--) {
                 String dotLine = dotsLines.get(i);
