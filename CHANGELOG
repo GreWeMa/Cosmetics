@@ -1,3 +1,7 @@
+VERSION 1.4.1
+* Update to GWMLibrary 2.5.1
+* Update to banana 1.2.1
+
 VERSION 1.4
 * Add 'DOTS_FILE' parameter to 'WALL' Cosmetic Effect
 * Add 'TEXT_FILE' parameter to 'FIGLET' Cosmetic Effect
