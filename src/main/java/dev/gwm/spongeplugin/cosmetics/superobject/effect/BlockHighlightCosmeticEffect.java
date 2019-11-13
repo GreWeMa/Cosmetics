@@ -11,7 +11,7 @@ import org.spongepowered.api.world.Locatable;
 
 import java.util.Optional;
 
-public class BlockHighlightCosmeticEffect extends BaseCosmeticEffect {
+public final class BlockHighlightCosmeticEffect extends BaseCosmeticEffect {
 
     public static final String TYPE = "BLOCK-HIGHLIGHT";
 

@@ -6,6 +6,7 @@ import dev.gwm.spongeplugin.library.exception.SuperObjectConstructionException;
 import dev.gwm.spongeplugin.library.utils.GWMLibraryUtils;
 import ninja.leaping.configurate.ConfigurationNode;
 import org.spongepowered.api.effect.particle.ParticleEffect;
+import org.spongepowered.api.effect.particle.ParticleOptions;
 
 import java.util.Optional;
 
@@ -14,7 +15,6 @@ public abstract class BaseCosmeticEffect extends AbstractCosmeticEffect {
     private final ParticleEffect particleEffect;
     private final boolean perAnimationColor;
     private final boolean perParticleColor;
-
 
     public BaseCosmeticEffect(ConfigurationNode node) {
         super(node);
@@ -41,6 +41,13 @@ public abstract class BaseCosmeticEffect extends AbstractCosmeticEffect {
         this.particleEffect = particleEffect;
         this.perAnimationColor = perAnimationColor;
         this.perParticleColor = perParticleColor;
+    }
+
+    public ParticleEffect getColoredParticleEffect() {
+        return ParticleEffect.builder().
+                from(getParticleEffect()).
+                option(ParticleOptions.COLOR, CosmeticsUtils.getRandomColor()).
+                build();
     }
 
     public ParticleEffect getParticleEffect() {

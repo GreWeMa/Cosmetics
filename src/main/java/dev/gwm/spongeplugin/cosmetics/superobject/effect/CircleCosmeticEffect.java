@@ -12,7 +12,7 @@ import org.spongepowered.api.world.Locatable;
 
 import java.util.Optional;
 
-public class CircleCosmeticEffect extends BaseCosmeticEffect {
+public final class CircleCosmeticEffect extends BaseCosmeticEffect {
 
     public static final String TYPE = "CIRCLE";
 

@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Plugin(id = "cosmetics",
 		name = "Cosmetics",
-		version = "1.4.1",
+		version = "1.5",
 		description = "Fancy cosmetic effects",
 		authors = {"GWM"/* My contacts:
 		                 * E-Mail(nazark@tutanota.com),
@@ -43,7 +43,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 		})
 public class Cosmetics extends SpongePlugin {
 
-	public static final Version VERSION = new Version(null, 1, 4, 1);
+	public static final Version VERSION = new Version(null, 1, 5);
 
 	private static Cosmetics instance = null;
 
@@ -127,10 +127,12 @@ public class Cosmetics extends SpongePlugin {
 				HelixCosmeticEffect.class);
 		event.register(new SuperObjectIdentifier<>(CosmeticsSuperObjectCategories.COSMETIC_EFFECT, CircleCosmeticEffect.TYPE),
 				CircleCosmeticEffect.class);
-        event.register(new SuperObjectIdentifier<>(CosmeticsSuperObjectCategories.COSMETIC_EFFECT, WallCosmeticEffects.TYPE),
-                WallCosmeticEffects.class);
-        event.register(new SuperObjectIdentifier<>(CosmeticsSuperObjectCategories.COSMETIC_EFFECT, FigletCosmeticEffect.TYPE),
-                FigletCosmeticEffect.class);
+        event.register(new SuperObjectIdentifier<>(CosmeticsSuperObjectCategories.COSMETIC_EFFECT, Symbols2dCosmeticEffects.TYPE),
+                Symbols2dCosmeticEffects.class);
+        event.register(new SuperObjectIdentifier<>(CosmeticsSuperObjectCategories.COSMETIC_EFFECT, Figlet2dCosmeticEffect.TYPE),
+                Figlet2dCosmeticEffect.class);
+        event.register(new SuperObjectIdentifier<>(CosmeticsSuperObjectCategories.COSMETIC_EFFECT, Image2dCosmeticEffect.TYPE),
+                Image2dCosmeticEffect.class);
 	}
 
 	@Listener

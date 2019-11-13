@@ -1,3 +1,12 @@
+VERSION 1.5
+* Make final all classes of the Cosmetic Effects
+* Rename 'FIGLET' Cosmetic Effect to 'FIGLET2D'
+* Rename 'WALL' Cosmetic Effect to 'SYMBOLS2D'
+* Add 'IMAGE2D' Cosmetic Effect
+* Remove 'X_ROTATION', 'Y_ROTATION' and 'Z_ROTATION' parameters from 'FIGLET2D' and 'SYMBOLS2D' Cosmetic Effects
+* Add 'ROTATION' parameter to 'FIGLET2D' and 'SYMBOLS2D' Cosmetic Effects
+* Rename 'DOTS' and 'DOTS_FILE' parameters in 'SYMBOLS2D' Cosmetic Effect to 'SYMBOLS' and 'SYMBOLS_FILE' accordingly
+
 VERSION 1.4.1
 * Update to GWMLibrary 2.5.1
 * Update to banana 1.2.1

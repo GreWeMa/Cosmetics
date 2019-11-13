@@ -11,7 +11,7 @@ import org.spongepowered.api.world.Locatable;
 
 import java.util.Optional;
 
-public class HelixCosmeticEffect extends BaseCosmeticEffect {
+public final class HelixCosmeticEffect extends BaseCosmeticEffect {
 
     public static final String TYPE = "HELIX";
 
