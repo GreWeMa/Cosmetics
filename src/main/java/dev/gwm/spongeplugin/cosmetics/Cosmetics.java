@@ -3,13 +3,14 @@ package dev.gwm.spongeplugin.cosmetics;
 import com.google.inject.Inject;
 import dev.gwm.spongeplugin.cosmetics.superobject.effect.*;
 import dev.gwm.spongeplugin.cosmetics.superobject.effect.base.CosmeticEffect;
-import dev.gwm.spongeplugin.cosmetics.utils.CosmeticsCommandUtils;
-import dev.gwm.spongeplugin.cosmetics.utils.CosmeticsSuperObjectCategories;
-import dev.gwm.spongeplugin.cosmetics.utils.CosmeticsUtils;
+import dev.gwm.spongeplugin.cosmetics.util.CosmeticsCommandUtils;
+import dev.gwm.spongeplugin.cosmetics.util.CosmeticsSuperObjectCategories;
+import dev.gwm.spongeplugin.cosmetics.util.CosmeticsUtils;
 import dev.gwm.spongeplugin.library.event.SuperObjectCategoriesRegistrationEvent;
 import dev.gwm.spongeplugin.library.event.SuperObjectIdentifiersRegistrationEvent;
 import dev.gwm.spongeplugin.library.event.SuperObjectsRegistrationEvent;
-import dev.gwm.spongeplugin.library.utils.*;
+import dev.gwm.spongeplugin.library.util.*;
+import dev.gwm.spongeplugin.library.util.service.SuperObjectService;
 import ninja.leaping.configurate.ConfigurationNode;
 import org.slf4j.Logger;
 import org.spongepowered.api.Sponge;
@@ -32,7 +33,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Plugin(id = "cosmetics",
 		name = "Cosmetics",
-		version = "1.5",
+		version = "1.5.1",
 		description = "Fancy cosmetic effects",
 		authors = {"GWM"/* My contacts:
 		                 * E-Mail(nazark@tutanota.com),
@@ -43,7 +44,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 		})
 public class Cosmetics extends SpongePlugin {
 
-	public static final Version VERSION = new Version(null, 1, 5);
+	public static final Version VERSION = new Version(1, 5, 1);
 
 	private static Cosmetics instance = null;
 
@@ -207,7 +208,7 @@ public class Cosmetics extends SpongePlugin {
 	}
 
 	private void unloadCosmeticEffects() {
-		Sponge.getServiceManager().provide(SuperObjectsService.class).get().
+		Sponge.getServiceManager().provide(SuperObjectService.class).get().
 				shutdownCreatedSuperObjects(superObject -> superObject instanceof CosmeticEffect);
 	}
 

@@ -1,10 +1,10 @@
-package dev.gwm.spongeplugin.cosmetics.utils;
+package dev.gwm.spongeplugin.cosmetics.util;
 
 import dev.gwm.spongeplugin.cosmetics.Cosmetics;
 import dev.gwm.spongeplugin.cosmetics.command.HelpCommand;
 import dev.gwm.spongeplugin.cosmetics.command.ReloadCommand;
 import dev.gwm.spongeplugin.cosmetics.command.SaveCommand;
-import dev.gwm.spongeplugin.library.utils.Language;
+import dev.gwm.spongeplugin.library.util.Language;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.text.Text;

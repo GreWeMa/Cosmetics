@@ -1,4 +1,4 @@
-package dev.gwm.spongeplugin.cosmetics.utils;
+package dev.gwm.spongeplugin.cosmetics.util;
 
 import org.spongepowered.api.world.Locatable;
 import org.spongepowered.api.world.Location;

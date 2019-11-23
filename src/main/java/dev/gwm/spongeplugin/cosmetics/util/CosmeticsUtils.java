@@ -1,9 +1,9 @@
-package dev.gwm.spongeplugin.cosmetics.utils;
+package dev.gwm.spongeplugin.cosmetics.util;
 
 import dev.gwm.spongeplugin.cosmetics.Cosmetics;
 import dev.gwm.spongeplugin.cosmetics.superobject.effect.base.CosmeticEffect;
-import dev.gwm.spongeplugin.library.utils.Config;
-import dev.gwm.spongeplugin.library.utils.SuperObjectsService;
+import dev.gwm.spongeplugin.library.util.Config;
+import dev.gwm.spongeplugin.library.util.service.SuperObjectService;
 import ninja.leaping.configurate.ConfigurationNode;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.effect.particle.ParticleEffect;
@@ -25,7 +25,7 @@ public class CosmeticsUtils {
             Config cosmeticEffectConfig = new Config(Cosmetics.getInstance(), file);
             ConfigurationNode loadNode = cosmeticEffectConfig.getNode("LOAD");
             if (force || loadNode.getBoolean(true)) {
-                CosmeticEffect cosmeticEffect = Sponge.getServiceManager().provide(SuperObjectsService.class).get().
+                CosmeticEffect cosmeticEffect = Sponge.getServiceManager().provide(SuperObjectService.class).get().
                         create(CosmeticsSuperObjectCategories.COSMETIC_EFFECT, cosmeticEffectConfig.getNode());
                 if (Cosmetics.getInstance().isLogLoadedEffects()) {
                     Cosmetics.getInstance().getLogger().

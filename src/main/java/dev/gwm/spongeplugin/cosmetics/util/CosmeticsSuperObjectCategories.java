@@ -1,7 +1,7 @@
-package dev.gwm.spongeplugin.cosmetics.utils;
+package dev.gwm.spongeplugin.cosmetics.util;
 
 import dev.gwm.spongeplugin.cosmetics.superobject.effect.base.CosmeticEffect;
-import dev.gwm.spongeplugin.library.utils.SuperObjectCategory;
+import dev.gwm.spongeplugin.library.util.SuperObjectCategory;
 
 public final class CosmeticsSuperObjectCategories {
 

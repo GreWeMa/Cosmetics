@@ -2,7 +2,7 @@ package dev.gwm.spongeplugin.cosmetics.superobject.effect;
 
 import com.flowpowered.math.vector.Vector3d;
 import dev.gwm.spongeplugin.cosmetics.superobject.effect.base.BaseCosmeticEffect;
-import dev.gwm.spongeplugin.cosmetics.utils.CosmeticsUtils;
+import dev.gwm.spongeplugin.cosmetics.util.CosmeticsUtils;
 import ninja.leaping.configurate.ConfigurationNode;
 import org.spongepowered.api.effect.Viewer;
 import org.spongepowered.api.effect.particle.ParticleEffect;

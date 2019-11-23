@@ -1,3 +1,8 @@
+VERSION 1.5.1
+* Update to GWMLibrary 2.5.2
+* Rename `utils` package to `util`
+* Change default value for 'VERTICAL_PARTICLE_DISTANCE' from 0.4 to 0.2 in 'FIGLET2D', 'SYMBOLS2D' and 'IMAGE2D' Cosmetic Effects
+
 VERSION 1.5
 * Make final all classes of the Cosmetic Effects
 * Rename 'FIGLET' Cosmetic Effect to 'FIGLET2D'

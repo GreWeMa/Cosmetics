@@ -1,11 +1,11 @@
 package dev.gwm.spongeplugin.cosmetics.superobject.effect.base;
 
 import com.flowpowered.math.vector.Vector3d;
-import dev.gwm.spongeplugin.cosmetics.utils.CosmeticsSuperObjectCategories;
+import dev.gwm.spongeplugin.cosmetics.util.CosmeticsSuperObjectCategories;
 import dev.gwm.spongeplugin.library.exception.SuperObjectConstructionException;
 import dev.gwm.spongeplugin.library.superobject.AbstractSuperObject;
-import dev.gwm.spongeplugin.library.utils.GWMLibraryUtils;
-import dev.gwm.spongeplugin.library.utils.SuperObjectCategory;
+import dev.gwm.spongeplugin.library.util.GWMLibraryUtils;
+import dev.gwm.spongeplugin.library.util.SuperObjectCategory;
 import ninja.leaping.configurate.ConfigurationNode;
 import org.spongepowered.api.effect.Viewer;
 import org.spongepowered.api.world.Locatable;

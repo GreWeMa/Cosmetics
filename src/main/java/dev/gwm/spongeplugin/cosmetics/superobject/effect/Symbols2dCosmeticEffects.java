@@ -4,7 +4,7 @@ import com.flowpowered.math.vector.Vector3d;
 import com.google.common.reflect.TypeToken;
 import dev.gwm.spongeplugin.cosmetics.superobject.effect.base.Abstract2dCosmeticEffect;
 import dev.gwm.spongeplugin.library.exception.SuperObjectConstructionException;
-import dev.gwm.spongeplugin.library.utils.GWMLibraryUtils;
+import dev.gwm.spongeplugin.library.util.GWMLibraryUtils;
 import ninja.leaping.configurate.ConfigurationNode;
 import org.spongepowered.api.effect.particle.ParticleEffect;
 
@@ -51,7 +51,7 @@ public final class Symbols2dCosmeticEffects extends Abstract2dCosmeticEffect {
             if (horizontalParticleDistance < 0 || horizontalParticleDistance >= 360) {
                 throw new IllegalArgumentException("Horizontal Particle Distance is either equal to or greater than 360 or less than 0!");
             }
-            verticalParticleDistance = verticalParticleDistanceNode.getDouble(0.4);
+            verticalParticleDistance = verticalParticleDistanceNode.getDouble(0.2);
             if (verticalParticleDistance < 0 || verticalParticleDistance >= 360) {
                 throw new IllegalArgumentException("Vertical Particle Distance is either equal to or greater than 360 or less than 0!");
             }

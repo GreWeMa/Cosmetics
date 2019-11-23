@@ -1,9 +1,9 @@
 package dev.gwm.spongeplugin.cosmetics.superobject.effect.base;
 
 import com.flowpowered.math.vector.Vector3d;
-import dev.gwm.spongeplugin.cosmetics.utils.CosmeticsUtils;
+import dev.gwm.spongeplugin.cosmetics.util.CosmeticsUtils;
 import dev.gwm.spongeplugin.library.exception.SuperObjectConstructionException;
-import dev.gwm.spongeplugin.library.utils.GWMLibraryUtils;
+import dev.gwm.spongeplugin.library.util.GWMLibraryUtils;
 import ninja.leaping.configurate.ConfigurationNode;
 import org.spongepowered.api.effect.particle.ParticleEffect;
 import org.spongepowered.api.effect.particle.ParticleOptions;
