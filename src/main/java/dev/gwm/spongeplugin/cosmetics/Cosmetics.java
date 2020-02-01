@@ -1,6 +1,5 @@
 package dev.gwm.spongeplugin.cosmetics;
 
-import com.google.inject.Inject;
 import dev.gwm.spongeplugin.cosmetics.superobject.effect.*;
 import dev.gwm.spongeplugin.cosmetics.superobject.effect.base.CosmeticEffect;
 import dev.gwm.spongeplugin.cosmetics.util.CosmeticsCommandUtils;
@@ -13,27 +12,27 @@ import dev.gwm.spongeplugin.library.util.*;
 import dev.gwm.spongeplugin.library.util.service.SuperObjectService;
 import ninja.leaping.configurate.ConfigurationNode;
 import org.slf4j.Logger;
-import org.spongepowered.api.Sponge;
+import org.spongepowered.api.Game;
 import org.spongepowered.api.asset.AssetManager;
 import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.cause.Cause;
 import org.spongepowered.api.event.cause.EventContext;
 import org.spongepowered.api.event.game.GameReloadEvent;
-import org.spongepowered.api.event.game.state.GameConstructionEvent;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStoppingServerEvent;
 import org.spongepowered.api.plugin.Dependency;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
 
+import javax.inject.Inject;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Plugin(id = "cosmetics",
 		name = "Cosmetics",
-		version = "1.5.1",
+		version = "1.5.2",
 		description = "Fancy cosmetic effects",
 		authors = {"GWM"/* My contacts:
 		                 * E-Mail(nazark@tutanota.com),
@@ -44,7 +43,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 		})
 public class Cosmetics extends SpongePlugin {
 
-	public static final Version VERSION = new Version(1, 5, 1);
+	public static final Version VERSION = new Version(1, 5, 2);
 
 	private static Cosmetics instance = null;
 
@@ -55,60 +54,66 @@ public class Cosmetics extends SpongePlugin {
 		return instance;
 	}
 
-	private Cause cause;
+	private final Game game;
+	private final Cause cause;
 
-    @Inject
-    @ConfigDir(sharedRoot = false)
-    private File configDirectory;
-    private File effectsDirectory;
+	private final Logger logger;
+	private final PluginContainer container;
 
-	@Inject
-	private Logger logger;
+    private final File configDirectory;
 
-	@Inject
-	private PluginContainer container;
+    private final File effectsDirectory;
 
-	private Config config;
-	private Config languageConfig;
+	private final Config config;
+	private final Config languageConfig;
 
-	private Language language;
+	private final Language language;
 
 	private boolean logLoadedEffects = true;
 
-	@Listener
-	public void onConstruct(GameConstructionEvent event) {
-		instance = this;
+	@Inject
+	public Cosmetics(Game game,
+					  Logger logger,
+					  PluginContainer container,
+					  @ConfigDir(sharedRoot = false) File configDirectory) {
+		Cosmetics.instance = this;
+		this.game = game;
+		cause = Cause.of(EventContext.empty(), container);
+		this.logger = logger;
+		this.container = container;
+		this.configDirectory = configDirectory;
+		effectsDirectory = new File(configDirectory, "effects");
+		if (!configDirectory.exists()) {
+			logger.info("Config directory does not exist! Trying to create it...");
+			try {
+				configDirectory.mkdirs();
+				logger.info("Config directory successfully created!");
+			} catch (Exception e) {
+				logger.warn("Failed to create config directory!", e);
+			}
+		}
+		if (!effectsDirectory.exists()) {
+			logger.info("Cosmetic Effects directory does not exist! Trying to create it...");
+			try {
+				effectsDirectory.mkdirs();
+				logger.info("Cosmetic Effects directory successfully created!");
+			} catch (Exception e) {
+				logger.warn("Failed to create Cosmetic Effects config directory!", e);
+			}
+		}
+		config = new Config.Builder(this, new File(configDirectory, "config.conf")).
+				loadDefaults("config.conf").
+				build();
+		languageConfig = new Config.Builder(this, new File(configDirectory, "language.conf")).
+				loadDefaults(getDefaultTranslationPath()).
+				build();
+		language = new Language(this);
+		logger.info("Construction completed!");
 	}
 
 	@Listener
 	public void onPreInitialization(GamePreInitializationEvent event) {
-	    effectsDirectory = new File(configDirectory, "effects");
-        if (!configDirectory.exists()) {
-            logger.info("Config directory does not exist! Trying to create it...");
-            try {
-                configDirectory.mkdirs();
-                logger.info("Config directory successfully created!");
-            } catch (Exception e) {
-                logger.warn("Failed to create config directory!", e);
-            }
-        }
-        if (!effectsDirectory.exists()) {
-            logger.info("Cosmetic Effects directory does not exist! Trying to create it...");
-            try {
-                effectsDirectory.mkdirs();
-                logger.info("Cosmetic Effects directory successfully created!");
-            } catch (Exception e) {
-                logger.warn("Failed to create Cosmetic Effects config directory!", e);
-            }
-        }
-        cause = Cause.of(EventContext.empty(), container);
-		AssetManager assetManager = Sponge.getAssetManager();
-		config = new Config(this, new File(configDirectory, "config.conf"),
-				assetManager.getAsset(this, "config.conf"), true, false);
-		languageConfig = new Config(this, new File(configDirectory, "language.conf"),
-				getDefaultTranslation(assetManager), true, false);
 		loadConfigValues();
-		language = new Language(this);
 		CosmeticsCommandUtils.registerCommands(this);
 		logger.info("PreInitialization completed!");
 	}
@@ -138,7 +143,7 @@ public class Cosmetics extends SpongePlugin {
 
 	@Listener
 	public void onSuperObjectsRegistration(SuperObjectsRegistrationEvent event) {
-		loadCpes();
+		loadCosmeticEffects();
 	}
 
 	@Listener
@@ -149,18 +154,15 @@ public class Cosmetics extends SpongePlugin {
 
 	@Listener
     public void onStopping(GameStoppingServerEvent event) {
-        save();
         logger.info("Stopping completed!");
     }
 
     public void reload() {
-        cause = Cause.of(EventContext.empty(), container);
         config.reload();
         languageConfig.reload();
         loadConfigValues();
-        language = new Language(this);
         unloadCosmeticEffects();
-		loadCpes();
+		loadCosmeticEffects();
         logger.info("Plugin has been reloaded.");
     }
 
@@ -173,7 +175,7 @@ public class Cosmetics extends SpongePlugin {
 		}
     }
 
-	private void loadCpes() {
+	private void loadCosmeticEffects() {
 		try {
 			AtomicInteger loaded = new AtomicInteger();
 			AtomicInteger skipped = new AtomicInteger();
@@ -208,7 +210,7 @@ public class Cosmetics extends SpongePlugin {
 	}
 
 	private void unloadCosmeticEffects() {
-		Sponge.getServiceManager().provide(SuperObjectService.class).get().
+		game.getServiceManager().provide(SuperObjectService.class).get().
 				shutdownCreatedSuperObjects(superObject -> superObject instanceof CosmeticEffect);
 	}
 
@@ -222,15 +224,16 @@ public class Cosmetics extends SpongePlugin {
 		return cause;
 	}
 
+	public Logger getLogger() {
+		return logger;
+	}
+
 	@Override
 	public PluginContainer getContainer() {
 		return container;
 	}
 
-	public Logger getLogger() {
-		return logger;
-	}
-
+	@Override
 	public File getConfigDirectory() {
 		return configDirectory;
 	}
@@ -244,6 +247,7 @@ public class Cosmetics extends SpongePlugin {
 		return config;
 	}
 
+	@Override
 	public Config getLanguageConfig() {
 		return languageConfig;
 	}

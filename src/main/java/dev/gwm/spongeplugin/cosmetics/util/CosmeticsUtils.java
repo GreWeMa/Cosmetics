@@ -22,7 +22,7 @@ public class CosmeticsUtils {
 
     public static boolean loadCosmeticEffect(File file, boolean force) {
         try {
-            Config cosmeticEffectConfig = new Config(Cosmetics.getInstance(), file);
+            Config cosmeticEffectConfig = new Config.Builder(Cosmetics.getInstance(), file).build();
             ConfigurationNode loadNode = cosmeticEffectConfig.getNode("LOAD");
             if (force || loadNode.getBoolean(true)) {
                 CosmeticEffect cosmeticEffect = Sponge.getServiceManager().provide(SuperObjectService.class).get().

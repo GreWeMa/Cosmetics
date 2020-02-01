@@ -3,7 +3,6 @@ package dev.gwm.spongeplugin.cosmetics.util;
 import dev.gwm.spongeplugin.cosmetics.Cosmetics;
 import dev.gwm.spongeplugin.cosmetics.command.HelpCommand;
 import dev.gwm.spongeplugin.cosmetics.command.ReloadCommand;
-import dev.gwm.spongeplugin.cosmetics.command.SaveCommand;
 import dev.gwm.spongeplugin.library.util.Language;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.spec.CommandSpec;
@@ -25,17 +24,11 @@ public final class CosmeticsCommandUtils {
                 description(Text.of("Reload the plugin")).
                 executor(new ReloadCommand(language)).
                 build();
-        CommandSpec saveCommand = CommandSpec.builder().
-                permission("cosmetics.command.save").
-                description(Text.of("Save the plugin's configs")).
-                executor(new SaveCommand(language)).
-                build();
         CommandSpec spec = CommandSpec.builder().
                 permission("cosmetics.command.base").
                 description(Text.of("The basic command")).
                 child(helpCommand, "help").
                 child(reloadCommand, "reload").
-                child(saveCommand, "save").
                 build();
         Sponge.getCommandManager().register(Cosmetics.getInstance(), spec,
                 "cosmetics", "cosmetic");
