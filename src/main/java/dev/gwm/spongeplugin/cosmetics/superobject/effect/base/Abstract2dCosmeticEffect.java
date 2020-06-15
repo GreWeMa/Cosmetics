@@ -1,6 +1,8 @@
 package dev.gwm.spongeplugin.cosmetics.superobject.effect.base;
 
 import com.flowpowered.math.vector.Vector3d;
+import dev.gwm.spongeplugin.cosmetics.util.Vector3dable;
+import dev.gwm.spongeplugin.cosmetics.util.Viewerable;
 import ninja.leaping.configurate.ConfigurationNode;
 import org.spongepowered.api.effect.Viewer;
 import org.spongepowered.api.effect.particle.ParticleEffect;
@@ -23,8 +25,8 @@ public abstract class Abstract2dCosmeticEffect extends BaseCosmeticEffect {
     }
 
     @Override
-    public Runnable createTask(Viewer viewer, Locatable locatable, Vector3d offset) {
-        return new DotsEffectRunnable(viewer, locatable, offset);
+    public Runnable createTask(Viewerable viewerable, Locatable locatable, Vector3dable offset) {
+        return new DotsEffectRunnable(viewerable, locatable, offset);
     }
 
     protected Map<Vector3d, ParticleEffect> colorDots(Map<Vector3d, ParticleEffect> dots) {
@@ -68,19 +70,20 @@ public abstract class Abstract2dCosmeticEffect extends BaseCosmeticEffect {
             return new Vector3d(x, y, z);
         }
 
-        public DotsEffectRunnable(Viewer viewer, Locatable locatable, Vector3d offset) {
-            super(viewer, locatable, offset);
+        public DotsEffectRunnable(Viewerable viewerable, Locatable locatable, Vector3dable offset) {
+            super(viewerable, locatable, offset);
         }
 
         @Override
         public void run() {
+            Viewer viewer = getViewerable().getViewer();
             Vector3d rotationAngles = getRotation();
             Vector3d center = getPosition();
             for (Map.Entry<Vector3d, ParticleEffect> entry : getDots().entrySet()) {
                 Vector3d dot = entry.getKey();
                 ParticleEffect particleEffect = entry.getValue();
                 Vector3d point = center.add(rotate(dot, rotationAngles.getX(), rotationAngles.getY(), rotationAngles.getZ()));
-                getViewer().spawnParticles(particleEffect, point);
+                viewer.spawnParticles(particleEffect, point);
             }
         }
     }

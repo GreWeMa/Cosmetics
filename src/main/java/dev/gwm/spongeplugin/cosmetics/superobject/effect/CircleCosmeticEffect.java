@@ -3,6 +3,8 @@ package dev.gwm.spongeplugin.cosmetics.superobject.effect;
 import com.flowpowered.math.vector.Vector3d;
 import dev.gwm.spongeplugin.cosmetics.superobject.effect.base.BaseCosmeticEffect;
 import dev.gwm.spongeplugin.cosmetics.util.CosmeticsUtils;
+import dev.gwm.spongeplugin.cosmetics.util.Vector3dable;
+import dev.gwm.spongeplugin.cosmetics.util.Viewerable;
 import dev.gwm.spongeplugin.library.exception.SuperObjectConstructionException;
 import ninja.leaping.configurate.ConfigurationNode;
 import org.spongepowered.api.effect.Viewer;
@@ -80,8 +82,8 @@ public final class CircleCosmeticEffect extends BaseCosmeticEffect {
     }
 
     @Override
-    public Runnable createTask(Viewer viewer, Locatable locatable, Vector3d offset) {
-        return new EffectRunnable(viewer, locatable, offset);
+    public Runnable createTask(Viewerable viewerable, Locatable locatable, Vector3dable offset) {
+        return new EffectRunnable(viewerable, locatable, offset);
     }
 
     public double getRadius() {
@@ -102,12 +104,13 @@ public final class CircleCosmeticEffect extends BaseCosmeticEffect {
         private final double l = (2 * Math.PI) / d;
         private int i = 0;
 
-        private EffectRunnable(Viewer viewer, Locatable locatable, Vector3d offset) {
-            super(viewer, locatable, offset);
+        private EffectRunnable(Viewerable viewerable, Locatable locatable, Vector3dable offset) {
+            super(viewerable, locatable, offset);
         }
 
         @Override
         public void run() {
+            Viewer viewer = getViewerable().getViewer();
             Vector3d position = getPosition();
             ParticleEffect effect = isPerAnimationColor() ?
                     ParticleEffect.builder().
@@ -125,11 +128,9 @@ public final class CircleCosmeticEffect extends BaseCosmeticEffect {
                 if (i > l) {
                     i = 0;
                 }
-                final double x = position.getX();
-                final double z = position.getZ();
                 double xOffset = radius * Math.cos(i * d);
                 double zOffset = radius * Math.sin(i * d);
-                getViewer().spawnParticles(effect, position.add(new Vector3d(xOffset, 0, zOffset)));
+                viewer.spawnParticles(effect, position.add(new Vector3d(xOffset, 0, zOffset)));
                 i++;
             }
         }

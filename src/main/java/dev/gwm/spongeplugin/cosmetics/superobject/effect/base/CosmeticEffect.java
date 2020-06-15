@@ -2,8 +2,7 @@ package dev.gwm.spongeplugin.cosmetics.superobject.effect.base;
 
 import com.flowpowered.math.vector.Vector3d;
 import dev.gwm.spongeplugin.cosmetics.Cosmetics;
-import dev.gwm.spongeplugin.cosmetics.util.CosmeticsSuperObjectCategories;
-import dev.gwm.spongeplugin.cosmetics.util.LocationLocatable;
+import dev.gwm.spongeplugin.cosmetics.util.*;
 import dev.gwm.spongeplugin.library.superobject.SuperObject;
 import dev.gwm.spongeplugin.library.util.SuperObjectCategory;
 import org.spongepowered.api.Sponge;
@@ -20,42 +19,18 @@ public interface CosmeticEffect extends SuperObject {
         return CosmeticsSuperObjectCategories.COSMETIC_EFFECT;
     }
 
-    default void play(Viewer viewer, Locatable locatable, Vector3d offset) {
-        createTask(viewer, locatable, offset).run();
+    default void play(Viewerable viewerable, Locatable locatable, Vector3dable offset) {
+        createTask(viewerable, locatable, offset).run();
     }
 
-    default void play(Viewer viewer, Locatable locatable) {
-        play(viewer, locatable, getOffset());
-    }
-
-    default void play(Viewer viewer, Location<World> location, Vector3d offset) {
-        play(viewer, new LocationLocatable(location), offset);
-    }
-
-    default void play(Viewer viewer, Location<World> location) {
-        play(viewer, location, getOffset());
-    }
-
-    default Task activate(Viewer viewer, Locatable locatable, Vector3d offset) {
+    default Task activate(Viewerable viewerable, Locatable locatable, Vector3dable offset) {
         return Sponge.getScheduler().createTaskBuilder().
-                execute(createTask(viewer, locatable, offset)).
+                execute(createTask(viewerable, locatable, offset)).
                 intervalTicks(getDelay()).
                 submit(Cosmetics.getInstance());
     }
 
-    default Task activate(Viewer viewer, Locatable locatable) {
-        return activate(viewer, locatable, getOffset());
-    }
-
-    default Task activate(Viewer viewer, Location<World> location, Vector3d offset) {
-        return activate(viewer, new LocationLocatable(location), offset);
-    }
-
-    default Task activate(Viewer viewer, Location<World> location) {
-        return activate(viewer, location, getOffset());
-    }
-
-    Runnable createTask(Viewer viewer, Locatable locatable, Vector3d offset);
+    Runnable createTask(Viewerable viewerable, Locatable locatable, Vector3dable offset);
 
     default long getDelay() {
         return defaultDelay();

@@ -3,6 +3,8 @@ package dev.gwm.spongeplugin.cosmetics.superobject.effect;
 import com.flowpowered.math.vector.Vector3d;
 import dev.gwm.spongeplugin.cosmetics.superobject.effect.base.BaseCosmeticEffect;
 import dev.gwm.spongeplugin.cosmetics.util.CosmeticsUtils;
+import dev.gwm.spongeplugin.cosmetics.util.Vector3dable;
+import dev.gwm.spongeplugin.cosmetics.util.Viewerable;
 import ninja.leaping.configurate.ConfigurationNode;
 import org.spongepowered.api.effect.Viewer;
 import org.spongepowered.api.effect.particle.ParticleEffect;
@@ -31,26 +33,27 @@ public final class GlobeCosmeticEffect extends BaseCosmeticEffect {
     }
 
     @Override
-    public Runnable createTask(Viewer viewer, Locatable locatable, Vector3d offset) {
-        return new EffectRunnable(viewer, locatable, offset);
+    public Runnable createTask(Viewerable viewerable, Locatable locatable, Vector3dable offset) {
+        return new EffectRunnable(viewerable, locatable, offset);
     }
 
     private final class EffectRunnable extends AbstractEffectRunnable {
 
         private double phi = 0;
 
-        private EffectRunnable(Viewer viewer, Locatable locatable, Vector3d offset) {
-            super(viewer, locatable, offset);
+        private EffectRunnable(Viewerable viewerable, Locatable locatable, Vector3dable offset) {
+            super(viewerable, locatable, offset);
         }
 
         /* Original code have been copied from "CrazyFeet-Sponge" developed by runescapejon */
         @Override
         public void run() {
+            Viewer viewer = getViewerable().getViewer();
+            Vector3d position = getPosition();
             phi += Math.PI / 10;
             if (phi >= Math.PI) {
                 phi = 0;
             }
-            Vector3d position = getPosition();
             ParticleEffect effect = isPerAnimationColor() ?
                     ParticleEffect.builder().
                             from(getParticleEffect()).
@@ -68,7 +71,7 @@ public final class GlobeCosmeticEffect extends BaseCosmeticEffect {
                 double x = r * Math.cos(theta) * Math.sin(phi);
                 double y = r * Math.cos(phi) + 1.5;
                 double z = r * Math.sin(theta) * Math.sin(phi);
-                getViewer().spawnParticles(effect, position.add(x, y, z));
+                viewer.spawnParticles(effect, position.add(x, y, z));
             }
         }
     }

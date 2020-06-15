@@ -3,6 +3,8 @@ package dev.gwm.spongeplugin.cosmetics.superobject.effect;
 import com.flowpowered.math.vector.Vector3d;
 import dev.gwm.spongeplugin.cosmetics.superobject.effect.base.BaseCosmeticEffect;
 import dev.gwm.spongeplugin.cosmetics.util.CosmeticsUtils;
+import dev.gwm.spongeplugin.cosmetics.util.Vector3dable;
+import dev.gwm.spongeplugin.cosmetics.util.Viewerable;
 import ninja.leaping.configurate.ConfigurationNode;
 import org.spongepowered.api.effect.Viewer;
 import org.spongepowered.api.effect.particle.ParticleEffect;
@@ -31,18 +33,19 @@ public final class BlockHighlightCosmeticEffect extends BaseCosmeticEffect {
     }
 
     @Override
-    public Runnable createTask(Viewer viewer, Locatable locatable, Vector3d offset) {
-        return new EffectRunnable(viewer, locatable, offset);
+    public Runnable createTask(Viewerable viewerable, Locatable locatable, Vector3dable offset) {
+        return new EffectRunnable(viewerable, locatable, offset);
     }
 
     private final class EffectRunnable extends AbstractEffectRunnable {
 
-        private EffectRunnable(Viewer viewer, Locatable locatable, Vector3d offset) {
-            super(viewer, locatable, offset);
+        private EffectRunnable(Viewerable viewerable, Locatable locatable, Vector3dable offset) {
+            super(viewerable, locatable, offset);
         }
 
         @Override
         public void run() {
+            Viewer viewer = getViewerable().getViewer();
             Vector3d position = getPosition();
             ParticleEffect particleEffect = isPerAnimationColor() ?
                     ParticleEffect.builder().
@@ -60,7 +63,7 @@ public final class BlockHighlightCosmeticEffect extends BaseCosmeticEffect {
                                         option(ParticleOptions.COLOR, CosmeticsUtils.getRandomColor()).
                                         build();
                             }
-                            getViewer().spawnParticles(particleEffect, position.add(x, y, z));
+                            viewer.spawnParticles(particleEffect, position.add(x, y, z));
                         }
                     }
                 }

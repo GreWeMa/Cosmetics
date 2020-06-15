@@ -2,6 +2,8 @@ package dev.gwm.spongeplugin.cosmetics.superobject.effect.base;
 
 import com.flowpowered.math.vector.Vector3d;
 import dev.gwm.spongeplugin.cosmetics.util.CosmeticsSuperObjectCategories;
+import dev.gwm.spongeplugin.cosmetics.util.Vector3dable;
+import dev.gwm.spongeplugin.cosmetics.util.Viewerable;
 import dev.gwm.spongeplugin.library.exception.SuperObjectConstructionException;
 import dev.gwm.spongeplugin.library.superobject.AbstractSuperObject;
 import dev.gwm.spongeplugin.library.util.GWMLibraryUtils;
@@ -67,29 +69,29 @@ public abstract class AbstractCosmeticEffect extends AbstractSuperObject impleme
 
     protected static abstract class AbstractEffectRunnable implements Runnable {
 
-        private final Viewer viewer;
+        private final Viewerable viewerable;
         private final Locatable locatable;
-        private final Vector3d offset;
+        private final Vector3dable offset;
 
-        public AbstractEffectRunnable(Viewer viewer, Locatable locatable, Vector3d offset) {
-            this.viewer = viewer;
+        public AbstractEffectRunnable(Viewerable viewerable, Locatable locatable, Vector3dable offset) {
+            this.viewerable = viewerable;
             this.locatable = locatable;
             this.offset = offset;
         }
 
         public Vector3d getPosition() {
-            return locatable.getLocation().getPosition().add(offset);
+            return locatable.getLocation().getPosition().add(offset.getVector3d());
         }
 
-        public Viewer getViewer() {
-            return viewer;
+        public Viewerable getViewerable() {
+            return viewerable;
         }
 
         public Locatable getLocatable() {
             return locatable;
         }
 
-        public Vector3d getOffset() {
+        public Vector3dable getOffset() {
             return offset;
         }
     }
