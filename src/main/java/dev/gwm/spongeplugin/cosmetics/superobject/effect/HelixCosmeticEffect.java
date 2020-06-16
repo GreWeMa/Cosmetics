@@ -50,7 +50,7 @@ public final class HelixCosmeticEffect extends BaseCosmeticEffect {
         public void run() {
             Viewer viewer = getViewerable().getViewer();
             Vector3d position = getPosition();
-            phi = phi + Math.PI / 16;
+            phi += Math.PI / 16;
             if (phi >= Math.PI) {
                 phi = 0;
             }
