@@ -34,13 +34,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 		name = "Cosmetics",
 		version = "1.5.2",
 		description = "Fancy cosmetic effects",
-		authors = {"GWM"/* My contacts:
-		                 * E-Mail(nazark@tutanota.com),
-		                 * Telegram(@grewema),
-		                 * Discord(GWM#2192)*/},
 		dependencies = {
 				@Dependency(id = "gwm_library")
-		})
+		},
+        authors = {"GWM"/* My contacts:
+                         * E-Mail(nazark@tutanota.com),
+                         * Telegram(@gwmdev)
+                         */})
 public class Cosmetics extends SpongePlugin {
 
 	public static final Version VERSION = new Version(1, 5, 2);
