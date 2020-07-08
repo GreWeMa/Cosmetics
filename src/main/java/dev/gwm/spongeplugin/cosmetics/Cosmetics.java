@@ -30,7 +30,8 @@ import java.io.File;
 import java.nio.file.Files;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Plugin(id = "cosmetics",
+@Plugin(
+		id = "cosmetics",
 		name = "Cosmetics",
 		version = "1.5.2",
 		description = "Fancy cosmetic effects",
