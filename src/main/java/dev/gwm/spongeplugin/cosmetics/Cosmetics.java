@@ -36,8 +36,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 		description = "Fancy cosmetic effects",
 		authors = {"GWM"/* My contacts:
 		                 * E-Mail(nazark@tutanota.com),
-		                 * Telegram(@grewema),
-		                 * Discord(GWM#2192)*/},
+		                 * Telegram(@gwmdev)*/},
 		dependencies = {
 				@Dependency(id = "gwm_library")
 		})
