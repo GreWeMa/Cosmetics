@@ -260,3 +260,4 @@ public class Cosmetics extends SpongePlugin {
 		return logLoadedEffects;
 	}
 }
+
