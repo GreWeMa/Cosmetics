@@ -14,7 +14,10 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class CosmeticsUtils {
+public final class CosmeticsUtils {
+
+    private CosmeticsUtils() {
+    }
 
     public static final ParticleEffect DEFAULT_PARTICLE_EFFECT = ParticleEffect.builder().
             type(ParticleTypes.REDSTONE_DUST).
