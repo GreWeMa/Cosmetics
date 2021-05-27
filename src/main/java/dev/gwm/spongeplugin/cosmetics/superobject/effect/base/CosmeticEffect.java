@@ -2,15 +2,14 @@ package dev.gwm.spongeplugin.cosmetics.superobject.effect.base;
 
 import com.flowpowered.math.vector.Vector3d;
 import dev.gwm.spongeplugin.cosmetics.Cosmetics;
-import dev.gwm.spongeplugin.cosmetics.util.*;
+import dev.gwm.spongeplugin.cosmetics.util.CosmeticsSuperObjectCategories;
+import dev.gwm.spongeplugin.cosmetics.util.Vector3dable;
+import dev.gwm.spongeplugin.cosmetics.util.Viewerable;
 import dev.gwm.spongeplugin.library.superobject.SuperObject;
 import dev.gwm.spongeplugin.library.util.SuperObjectCategory;
 import org.spongepowered.api.Sponge;
-import org.spongepowered.api.effect.Viewer;
 import org.spongepowered.api.scheduler.Task;
 import org.spongepowered.api.world.Locatable;
-import org.spongepowered.api.world.Location;
-import org.spongepowered.api.world.World;
 
 public interface CosmeticEffect extends SuperObject {
 

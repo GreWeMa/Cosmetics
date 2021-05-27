@@ -10,7 +10,6 @@ import ninja.leaping.configurate.ConfigurationNode;
 import org.spongepowered.api.effect.particle.ParticleEffect;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.util.*;
 import java.util.stream.Collectors;

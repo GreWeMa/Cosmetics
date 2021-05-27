@@ -9,7 +9,6 @@ import dev.gwm.spongeplugin.library.superobject.AbstractSuperObject;
 import dev.gwm.spongeplugin.library.util.GWMLibraryUtils;
 import dev.gwm.spongeplugin.library.util.SuperObjectCategory;
 import ninja.leaping.configurate.ConfigurationNode;
-import org.spongepowered.api.effect.Viewer;
 import org.spongepowered.api.world.Locatable;
 
 import java.util.Optional;

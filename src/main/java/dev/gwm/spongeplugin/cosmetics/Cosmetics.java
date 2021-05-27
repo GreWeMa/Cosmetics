@@ -13,7 +13,6 @@ import dev.gwm.spongeplugin.library.util.service.SuperObjectService;
 import ninja.leaping.configurate.ConfigurationNode;
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
-import org.spongepowered.api.asset.AssetManager;
 import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.cause.Cause;
