@@ -41,9 +41,9 @@ public final class Symbols2dCosmeticEffects extends Abstract2dCosmeticEffect {
             if (!symbolsNode.isVirtual()) {
                 symbols = symbolsNode.getList(TypeToken.of(String.class));
             } else if (!symbolsFileNode.isVirtual()) {
-                symbols = new BufferedReader(new FileReader(new File(symbolsFileNode.getString()))).
-                        lines().
-                        collect(Collectors.toList());
+                try (BufferedReader source = new BufferedReader(new FileReader(new File(symbolsFileNode.getString())))) {
+                    symbols = source.lines().collect(Collectors.toList());
+                }
             } else {
                 throw new IllegalArgumentException("Both DOTS and DOTS_FILES nodes do not exist!");
             }
