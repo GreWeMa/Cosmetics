@@ -44,7 +44,7 @@ public final class Figlet2dCosmeticEffect extends Abstract2dCosmeticEffect {
             if (!textNode.isVirtual()) {
                 text = textNode.getList(TypeToken.of(String.class));
             } else if (!textFileNode.isVirtual()) {
-                try (BufferedReader source = new BufferedReader(new FileReader(new File(textFileNode.getString())))) {
+                try (BufferedReader source = new BufferedReader(new FileReader(textFileNode.getString()))) {
                     text = source.lines().collect(Collectors.toList());
                 }
             } else {
