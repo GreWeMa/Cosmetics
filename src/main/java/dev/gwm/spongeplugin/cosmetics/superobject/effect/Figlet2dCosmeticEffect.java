@@ -11,6 +11,10 @@ import org.spongepowered.api.effect.particle.ParticleEffect;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -43,7 +47,7 @@ public final class Figlet2dCosmeticEffect extends Abstract2dCosmeticEffect {
             if (!textNode.isVirtual()) {
                 text = textNode.getList(TypeToken.of(String.class));
             } else if (!textFileNode.isVirtual()) {
-                try (BufferedReader source = new BufferedReader(new FileReader(textFileNode.getString()))) {
+                try (BufferedReader source = Files.newBufferedReader(Paths.get(textFileNode.getString()), StandardCharsets.UTF_8)) {
                     text = source.lines().collect(Collectors.toList());
                 }
             } else {

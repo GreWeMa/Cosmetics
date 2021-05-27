@@ -10,6 +10,9 @@ import org.spongepowered.api.effect.particle.ParticleEffect;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -40,7 +43,7 @@ public final class Symbols2dCosmeticEffects extends Abstract2dCosmeticEffect {
             if (!symbolsNode.isVirtual()) {
                 symbols = symbolsNode.getList(TypeToken.of(String.class));
             } else if (!symbolsFileNode.isVirtual()) {
-                try (BufferedReader source = new BufferedReader(new FileReader(symbolsFileNode.getString()))) {
+                try (BufferedReader source = Files.newBufferedReader(Paths.get(symbolsFileNode.getString()), StandardCharsets.UTF_8)) {
                     symbols = source.lines().collect(Collectors.toList());
                 }
             } else {
