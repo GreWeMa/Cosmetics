@@ -5,5 +5,8 @@ import dev.gwm.spongeplugin.library.util.SuperObjectCategory;
 
 public final class CosmeticsSuperObjectCategories {
 
+    private CosmeticsSuperObjectCategories() {
+    }
+
     public static final SuperObjectCategory<CosmeticEffect> COSMETIC_EFFECT = new SuperObjectCategory<>("COSMETIC_EFFECT");
 }
