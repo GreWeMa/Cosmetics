@@ -14,12 +14,12 @@
         <repository>
             <!--spongeapi-->
             <id>sponge</id>
-            <url>http://repo.spongepowered.org/maven</url>
+            <url>https://repo.spongepowered.org/maven</url>
         </repository>
         <repository>
             <!--library-->
             <id>gwmdev</id>
-            <url>https://maven.gwm.dev</url>
+            <url>https://maven.gwm.one</url>
         </repository>
     </repositories>
 
