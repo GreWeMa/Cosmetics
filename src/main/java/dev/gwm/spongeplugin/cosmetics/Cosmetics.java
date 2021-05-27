@@ -39,7 +39,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 		dependencies = {
 				@Dependency(id = "gwm_library")
 		})
-public class Cosmetics extends SpongePlugin {
+public final class Cosmetics extends SpongePlugin {
 
 	public static final Version VERSION = new Version(1, 5, 3);
 
