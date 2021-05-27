@@ -4,7 +4,7 @@ import org.spongepowered.api.world.Locatable;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
-public class LocationLocatable implements Locatable {
+public final class LocationLocatable implements Locatable {
 
     private final Location<World> location;
 

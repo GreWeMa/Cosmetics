@@ -3,7 +3,7 @@ package dev.gwm.spongeplugin.cosmetics.util;
 import org.spongepowered.api.effect.Viewer;
 import org.spongepowered.api.world.Locatable;
 
-public class LocatableWorldViewerable implements Viewerable {
+public final class LocatableWorldViewerable implements Viewerable {
 
     private final Locatable locatable;
 

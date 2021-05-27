@@ -2,7 +2,7 @@ package dev.gwm.spongeplugin.cosmetics.util;
 
 import com.flowpowered.math.vector.Vector3d;
 
-public class Vector3dVector3dable implements Vector3dable {
+public final class Vector3dVector3dable implements Vector3dable {
 
     private final Vector3d vector3d;
 

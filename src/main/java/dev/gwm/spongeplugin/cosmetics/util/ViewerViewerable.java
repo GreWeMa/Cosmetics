@@ -2,7 +2,7 @@ package dev.gwm.spongeplugin.cosmetics.util;
 
 import org.spongepowered.api.effect.Viewer;
 
-public class ViewerViewerable implements Viewerable {
+public final class ViewerViewerable implements Viewerable {
 
     private final Viewer viewer;
 
