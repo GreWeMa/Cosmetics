@@ -70,16 +70,18 @@ public abstract class AbstractCosmeticEffect extends AbstractSuperObject impleme
 
         private final Viewerable viewerable;
         private final Locatable locatable;
-        private final Vector3dable offset;
+        private final Vector3d offset;
+        private final Vector3dable customOffset;
 
-        public AbstractEffectRunnable(Viewerable viewerable, Locatable locatable, Vector3dable offset) {
+        public AbstractEffectRunnable(Viewerable viewerable, Locatable locatable, Vector3d offset, Vector3dable customOffset) {
             this.viewerable = viewerable;
             this.locatable = locatable;
             this.offset = offset;
+            this.customOffset = customOffset;
         }
 
         public Vector3d getPosition() {
-            return locatable.getLocation().getPosition().add(offset.getVector3d());
+            return locatable.getLocation().getPosition().add(offset).add(customOffset.getVector3d());
         }
 
         public Viewerable getViewerable() {
@@ -90,8 +92,12 @@ public abstract class AbstractCosmeticEffect extends AbstractSuperObject impleme
             return locatable;
         }
 
-        public Vector3dable getOffset() {
+        public Vector3d getOffset() {
             return offset;
+        }
+
+        public Vector3dable getCustomOffset() {
+            return customOffset;
         }
     }
 }

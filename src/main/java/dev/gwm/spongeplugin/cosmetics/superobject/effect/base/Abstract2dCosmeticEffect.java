@@ -25,15 +25,15 @@ public abstract class Abstract2dCosmeticEffect extends BaseCosmeticEffect {
     }
 
     @Override
-    public Runnable createTask(Viewerable viewerable, Locatable locatable, Vector3dable offset) {
-        return new DotsEffectRunnable(viewerable, locatable, offset);
+    public Runnable createTask(Viewerable viewerable, Locatable locatable, Vector3dable customOffset) {
+        return new DotsEffectRunnable(viewerable, locatable, getOffset(), customOffset);
     }
 
     protected Map<Vector3d, ParticleEffect> colorDots(Map<Vector3d, ParticleEffect> dots) {
         if (isPerParticleColor()) {
             return dots.keySet().
                     stream().
-                    collect(Collectors.toMap(Function.identity(),it -> getColoredParticleEffect()));
+                    collect(Collectors.toMap(Function.identity(), it -> getColoredParticleEffect()));
         } else if (isPerAnimationColor()){
             ParticleEffect particleEffect = getColoredParticleEffect();
             return dots.keySet().
@@ -70,8 +70,8 @@ public abstract class Abstract2dCosmeticEffect extends BaseCosmeticEffect {
             return new Vector3d(x, y, z);
         }
 
-        public DotsEffectRunnable(Viewerable viewerable, Locatable locatable, Vector3dable offset) {
-            super(viewerable, locatable, offset);
+        public DotsEffectRunnable(Viewerable viewerable, Locatable locatable, Vector3d offset, Vector3dable customOffset) {
+            super(viewerable, locatable, offset, customOffset);
         }
 
         @Override

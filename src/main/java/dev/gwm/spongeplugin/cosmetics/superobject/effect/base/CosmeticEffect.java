@@ -18,18 +18,18 @@ public interface CosmeticEffect extends SuperObject {
         return CosmeticsSuperObjectCategories.COSMETIC_EFFECT;
     }
 
-    default void play(Viewerable viewerable, Locatable locatable, Vector3dable offset) {
-        createTask(viewerable, locatable, offset).run();
+    default void play(Viewerable viewerable, Locatable locatable, Vector3dable customOffset) {
+        createTask(viewerable, locatable, customOffset).run();
     }
 
-    default Task activate(Viewerable viewerable, Locatable locatable, Vector3dable offset) {
+    default Task activate(Viewerable viewerable, Locatable locatable, Vector3dable customOffset) {
         return Sponge.getScheduler().createTaskBuilder().
-                execute(createTask(viewerable, locatable, offset)).
+                execute(createTask(viewerable, locatable, customOffset)).
                 intervalTicks(getDelay()).
                 submit(Cosmetics.getInstance());
     }
 
-    Runnable createTask(Viewerable viewerable, Locatable locatable, Vector3dable offset);
+    Runnable createTask(Viewerable viewerable, Locatable locatable, Vector3dable customOffset);
 
     default long getDelay() {
         return defaultDelay();

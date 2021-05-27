@@ -82,8 +82,8 @@ public final class CircleCosmeticEffect extends BaseCosmeticEffect {
     }
 
     @Override
-    public Runnable createTask(Viewerable viewerable, Locatable locatable, Vector3dable offset) {
-        return new EffectRunnable(viewerable, locatable, offset);
+    public Runnable createTask(Viewerable viewerable, Locatable locatable, Vector3dable customOffset) {
+        return new EffectRunnable(viewerable, locatable, getOffset(), customOffset);
     }
 
     public double getRadius() {
@@ -104,8 +104,8 @@ public final class CircleCosmeticEffect extends BaseCosmeticEffect {
         private final double l = (2 * Math.PI) / d;
         private int i = 0;
 
-        private EffectRunnable(Viewerable viewerable, Locatable locatable, Vector3dable offset) {
-            super(viewerable, locatable, offset);
+        private EffectRunnable(Viewerable viewerable, Locatable locatable, Vector3d offset, Vector3dable customOffset) {
+            super(viewerable, locatable, offset, customOffset);
         }
 
         @Override
