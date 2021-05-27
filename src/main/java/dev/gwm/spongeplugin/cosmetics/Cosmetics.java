@@ -85,8 +85,11 @@ public class Cosmetics extends SpongePlugin {
 		if (!configDirectory.exists()) {
 			logger.info("Config directory does not exist! Trying to create it...");
 			try {
-				configDirectory.mkdirs();
-				logger.info("Config directory successfully created!");
+				if (configDirectory.mkdirs()) {
+					logger.info("Config directory successfully created!");
+				} else {
+					logger.error("Failed to create config directory!");
+				}
 			} catch (Exception e) {
 				logger.warn("Failed to create config directory!", e);
 			}
@@ -94,8 +97,11 @@ public class Cosmetics extends SpongePlugin {
 		if (!effectsDirectory.exists()) {
 			logger.info("Cosmetic Effects directory does not exist! Trying to create it...");
 			try {
-				effectsDirectory.mkdirs();
-				logger.info("Cosmetic Effects directory successfully created!");
+				if (effectsDirectory.mkdirs()) {
+					logger.info("Cosmetic Effects directory successfully created!");
+				} else {
+					logger.error("Failed to create Cosmetic Effects directory!");
+				}
 			} catch (Exception e) {
 				logger.warn("Failed to create Cosmetic Effects config directory!", e);
 			}
